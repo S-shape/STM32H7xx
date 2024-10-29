@@ -25,7 +25,11 @@
 #define SPIport(p) SPIportI(p)
 #define SPIportI(p) SPI ## p
 
+#if SPI_PORT == 12
+#define SPIPORT SPIport(1)
+#else
 #define SPIPORT SPIport(SPI_PORT)
+#endif
 
 static SPI_HandleTypeDef spi_port = {
     .Instance = SPIPORT,
@@ -86,6 +90,44 @@ void spi_init (void)
             .pin = 7,
             .mode = { .mask = PINMODE_NONE }
         };
+
+#elif SPI_PORT == 12
+
+        __HAL_RCC_SPI1_CLK_ENABLE();
+
+        GPIO_InitTypeDef GPIO_InitStruct = {
+            .Pin =  GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5,
+            .Mode = GPIO_MODE_AF_PP,
+            .Pull = GPIO_NOPULL,
+            .Speed = GPIO_SPEED_FREQ_HIGH,
+            .Alternate = GPIO_AF5_SPI1,
+        };
+        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+        static const periph_pin_t sck = {
+            .function = Output_SPICLK,
+            .group = PinGroup_SPI,
+            .port = GPIOB,
+            .pin = 3,
+            .mode = { .mask = PINMODE_OUTPUT }
+        };
+
+        static const periph_pin_t sdi = {
+            .function = Input_MISO,
+            .group = PinGroup_SPI,
+            .port = GPIOB,
+            .pin = 4,
+            .mode = { .mask = PINMODE_NONE }
+        };
+        static const periph_pin_t sdo = {
+            .function = Output_MOSI,
+            .group = PinGroup_SPI,
+            .port = GPIOB,
+            .pin = 5,
+            .mode = { .mask = PINMODE_NONE }
+        };
+
+
 #elif SPI_PORT == 2
         __HAL_RCC_SPI2_CLK_ENABLE();
 
