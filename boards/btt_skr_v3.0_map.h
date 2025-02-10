@@ -100,7 +100,7 @@
 #endif
 
 #define AUXOUTPUT0_PORT             GPIOB                       // Spindle PWM - EXP1 - PB0, pin 9
-#define AUXOUTPUT0_PIN              0
+#define AUXOUTPUT0_PIN              4
 #define AUXOUTPUT1_PORT             GPIOB                       // Spindle direction - FAN2
 #define AUXOUTPUT1_PIN              5
 #define AUXOUTPUT2_PORT             GPIOB                       // Spindle enable - FAN1
@@ -108,7 +108,7 @@
 #define AUXOUTPUT3_PORT             GPIOB                       // Coolant flood - HEAT0
 #define AUXOUTPUT3_PIN              3
 #define AUXOUTPUT4_PORT             GPIOB                       // Coolant mist - HEAT1
-#define AUXOUTPUT4_PIN              4
+#define AUXOUTPUT4_PIN              0
 
 // Define driver spindle pins.
 #if DRIVER_SPINDLE_ENABLE & SPINDLE_ENA
@@ -137,7 +137,7 @@
 // Define user-control controls (cycle start, reset, feed hold) input pins.
 // These are all available on EXP2 along with electrical RESET* (EXP2, pin 3)
 #define CONTROL_PORT                GPIOA
-#define RESET_PIN                   4                           // EXP2 - PA4, pin 7
+#define RESET_PIN                  -1 //4                           // EXP2 - PA4, pin 7
 #define FEED_HOLD_PIN               5                           // EXP2 - PA5, pin 9
 #define CYCLE_START_PIN             6                           // EXP2 - PA6, pin 10
 
